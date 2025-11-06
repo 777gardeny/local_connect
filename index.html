@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로컬 연결 디자이너 - 평화 시장에서 시작하는 당신의 창업</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Pretendard', 'Inter', sans-serif;
+            line-height: 1.7;
+            color: #2d3748;
+            background: #ffffff;
+            padding-top: 80px;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 16px 0;
+        }
+        
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: #D97541;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: #2d3748;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #D97541;
+        }
+        
+        .nav-cta {
+            background: #D97541;
+            color: white !important;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+        
+        .nav-cta:hover {
+            background: #c0632e;
+            color: white !important;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: #D97541;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: white;
+                flex-direction: column;
+                justify-content: flex-start;
+                padding: 40px 20px;
+                gap: 24px;
+                transition: left 0.3s ease;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(217, 117, 65, 0.05) 0%, rgba(44, 95, 79, 0.05) 100%);
+            padding: 120px 20px 100px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            color: #1a202c;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+        
+        .hero h1 .highlight {
+            color: #D97541;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .hero h1 .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            width: 100%;
+            height: 12px;
+            background: rgba(217, 117, 65, 0.2);
+            z-index: -1;
+        }
+        
+        .hero .subheadline {
+            font-size: 24px;
+            color: #4a5568;
+            margin-bottom: 48px;
+            font-weight: 400;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: #D97541;
+            color: white;
+            padding: 18px 48px;
+            font-size: 20px;
+            font-weight: 600;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(217, 117, 65, 0.3);
+        }
+        
+        .cta-button:hover {
+            background: #c0632e;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(217, 117, 65, 0.4);
+        }
+        
+        /* Section Styling */
+        section {
+            padding: 100px 20px;
+        }
+        
+        .section-title {
+            font-size: 42px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        
+        .section-subtitle {
+            font-size: 20px;
+            color: #718096;
+            text-align: center;
+            margin-bottom: 60px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Problem Section */
+        .problem {
+            background: #f7fafc;
+        }
+        
+        .problem-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+        }
+        
+        .problem-card {
+            background: white;
+            padding: 36px;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        }
+        
+        .problem-card h3 {
+            font-size: 24px;
+            color: #D97541;
+            margin-bottom: 16px;
+        }
+        
+        .problem-card p {
+            font-size: 18px;
+            color: #4a5568;
+            line-height: 1.8;
+        }
+        
+        /* Solution Section */
+        .solution {
+            background: linear-gradient(135deg, #2C5F4F 0%, #1a4538 100%);
+            color: white;
+        }
+        
+        .solution .section-title,
+        .solution .section-subtitle {
+            color: white;
+        }
+        
+        .solution-content {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 20px;
+            line-height: 1.9;
+            text-align: center;
+        }
+        
+        .solution-highlight {
+            background: rgba(217, 117, 65, 0.2);
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        
+        /* Features Section */
+        .features {
+            background: white;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 48px;
+            margin-top: 60px;
+        }
+        
+        .feature-item {
+            text-align: center;
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #D97541 0%, #c0632e 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-size: 36px;
+        }
+        
+        .feature-item h3 {
+            font-size: 26px;
+            color: #1a202c;
+            margin-bottom: 16px;
+        }
+        
+        .feature-item p {
+            font-size: 18px;
+            color: #4a5568;
+            line-height: 1.8;
+        }
+        
+        /* Trust Section */
+        .trust {
+            background: #f7fafc;
+        }
+        
+        .trust-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .trust-badge {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            margin-bottom: 32px;
+            border-left: 6px solid #2C5F4F;
+        }
+        
+        .trust-badge h3 {
+            font-size: 24px;
+            color: #2C5F4F;
+            margin-bottom: 16px;
+        }
+        
+        .trust-badge p {
+            font-size: 18px;
+            color: #4a5568;
+            line-height: 1.8;
+        }
+        
+        /* Pricing Section */
+        .pricing {
+            background: white;
+            text-align: center;
+        }
+        
+        .pricing-card {
+            max-width: 600px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(217, 117, 65, 0.05) 0%, rgba(44, 95, 79, 0.05) 100%);
+            padding: 60px 40px;
+            border-radius: 24px;
+            border: 3px solid #D97541;
+        }
+        
+        .pricing-badge {
+            display: inline-block;
+            background: #D97541;
+            color: white;
+            padding: 8px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            font-size: 16px;
+        }
+        
+        .pricing-card h3 {
+            font-size: 36px;
+            color: #1a202c;
+            margin-bottom: 16px;
+        }
+        
+        .price {
+            font-size: 56px;
+            font-weight: 800;
+            color: #D97541;
+            margin-bottom: 8px;
+        }
+        
+        .price-original {
+            font-size: 24px;
+            color: #a0aec0;
+            text-decoration: line-through;
+            margin-bottom: 24px;
+        }
+        
+        .pricing-features {
+            text-align: left;
+            margin: 32px 0;
+            font-size: 18px;
+            color: #4a5568;
+        }
+        
+        .pricing-features li {
+            margin-bottom: 16px;
+            padding-left: 32px;
+            position: relative;
+        }
+        
+        .pricing-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #2C5F4F;
+            font-weight: bold;
+            font-size: 24px;
+        }
+        
+        /* CTA Section */
+        .final-cta {
+            background: linear-gradient(135deg, #D97541 0%, #c0632e 100%);
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+        }
+        
+        .final-cta h2 {
+            font-size: 48px;
+            margin-bottom: 24px;
+        }
+        
+        .final-cta p {
+            font-size: 22px;
+            margin-bottom: 48px;
+            opacity: 0.95;
+        }
+        
+        .cta-button-white {
+            display: inline-block;
+            background: white;
+            color: #D97541;
+            padding: 18px 48px;
+            font-size: 20px;
+            font-weight: 600;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .cta-button-white:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero .subheadline {
+                font-size: 18px;
+            }
+            
+            .section-title {
+                font-size: 32px;
+            }
+            
+            .cta-button,
+            .cta-button-white {
+                font-size: 18px;
+                padding: 16px 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="javascript:void(0)" class="logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">로컬 연결 디자이너</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="javascript:void(0)" onclick="scrollToSection('problem')">문제점</a></li>
+                <li><a href="javascript:void(0)" onclick="scrollToSection('solution')">솔루션</a></li>
+                <li><a href="javascript:void(0)" onclick="scrollToSection('features')">혜택</a></li>
+                <li><a href="javascript:void(0)" onclick="scrollToSection('trust')">신뢰성</a></li>
+                <li><a href="javascript:void(0)" onclick="scrollToSection('pricing')">가격</a></li>
+                <li><a href="javascript:void(0)" class="nav-cta" onclick="scrollToSection('apply')">지금 신청하기</a></li>
+            </ul>
+            <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>
+                평화 시장에서 홀로 고군분투하지 마세요.<br>
+                <span class="highlight">로컬 연결 디자이너</span>가 함께합니다
+            </h1>
+            <p class="subheadline">
+                청년 창업자와 시장 상인, 시니어 기술자를 연결하여<br>
+                당신의 첫 팝업 스토어가 성공하도록 돕습니다
+            </p>
+            <a href="javascript:void(0)" class="cta-button" onclick="scrollToSection('apply')">베타 테스터 신청하기 →</a>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem" id="problem">
+        <div class="container">
+            <h2 class="section-title">이런 고민, 하고 계시지 않나요?</h2>
+            <p class="section-subtitle">
+                평화 시장의 저렴한 임대료는 매력적이지만,<br>
+                막상 시작하려니 막막한 당신을 위해 준비했습니다
+            </p>
+            
+            <div class="problem-cards">
+                <div class="problem-card">
+                    <h3>😰 관계의 벽</h3>
+                    <p>시장 상인들과 어떻게 친해져야 할지 모르겠고, 협력할 방법도 막연합니다. 혼자서는 너무 외롭습니다.</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h3>🤔 공간의 불확실성</h3>
+                    <p>유휴 점포는 많지만, 어떤 공간이 내 사업에 맞는지, 어떻게 활용해야 할지 판단이 서지 않습니다.</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h3>💸 시행착오 비용</h3>
+                    <p>처음 시작하는데 실패하면 어쩌나 두렵고, 검증 없이 큰 비용을 투자하기 부담스럽습니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="solution" id="solution">
+        <div class="container">
+            <h2 class="section-title">우리는 '연결'로 문제를 해결합니다</h2>
+            <p class="section-subtitle">
+                로컬 연결 디자이너는 단순한 공간 중개가 아닙니다
+            </p>
+            
+            <div class="solution-content">
+                <p>
+                    우리는 <span class="solution-highlight">청년 창업자와 시장 상인, 그리고 지역 시니어 기술자를 연결</span>하여 
+                    평화 시장의 유휴 공간을 활용한 팝업 스토어 및 협업 프로젝트를 기획하고 운영합니다.
+                </p>
+                <br><br>
+                <p>
+                    50년 역사의 평화 시장이 가진 <span class="solution-highlight">인적 네트워크와 물적 자원</span>을 당신의 창업에 연결하여, 
+                    고립감 없이 지역 사회와 함께 성장할 수 있도록 돕습니다.
+                </p>
+                <br><br>
+                <p>
+                    당신은 더 이상 혼자가 아닙니다. 우리가 다리가 되어드리겠습니다.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">로컬 연결 디자이너와 함께하면</h2>
+            <p class="section-subtitle">
+                당신의 창업이 이렇게 달라집니다
+            </p>
+            
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">🤝</div>
+                    <h3>즉시 활용 가능한 네트워크</h3>
+                    <p>
+                        지역 대학 창업 동아리, 초등학교 동문 커뮤니티, 시장 상인회, 시니어 기술자 모임까지. 
+                        검증된 로컬 네트워크에 바로 연결되어 초기 고객 확보와 협력이 쉬워집니다.
+                    </p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">🏪</div>
+                    <h3>검증된 팝업 스토어 공간</h3>
+                    <p>
+                        평화 시장 내 유휴 점포를 셀프 리모델링한 '공용 공간'에서 낮은 리스크로 시작하세요. 
+                        디자인·기술 역량을 활용한 맞춤형 공간 설계를 지원합니다.
+                    </p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">📊</div>
+                    <h3>데이터 기반 운영 컨설팅</h3>
+                    <p>
+                        SQL을 활용한 소상공인 매출 데이터 분석으로 당신의 사업에 필요한 인사이트를 제공합니다. 
+                        감이 아닌 데이터로 의사결정하세요.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section class="trust" id="trust">
+        <div class="container">
+            <h2 class="section-title">우리를 믿어도 될까요?</h2>
+            <p class="section-subtitle">
+                지금 이 순간도 검증하고 있습니다
+            </p>
+            
+            <div class="trust-content">
+                <div class="trust-badge">
+                    <h3>🚀 현재 MVP 테스트 진행 중</h3>
+                    <p>
+                        평화 시장 내 유휴 점포 1곳을 직접 셀프 리모델링하여 팝업 스토어용 '공용 공간'으로 시범 운영하고 있습니다. 
+                        포토샵/일러스트 디자인 역량과 유튜브 콘텐츠 기획 능력을 활용해 공간의 스토리를 만들어가고 있습니다.
+                    </p>
+                </div>
+                
+                <div class="trust-badge">
+                    <h3>🏛️ 지역 기관과의 협력</h3>
+                    <p>
+                        <strong>지역 내 도시재생 지원센터</strong> 및 <strong>평화 시장 상인회</strong>와 협력하여 
+                        안정적이고 지속가능한 창업 생태계를 구축하고 있습니다. 공공의 신뢰를 기반으로 합니다.
+                    </p>
+                </div>
+                
+                <div class="trust-badge">
+                    <h3>👥 검증된 실행 역량</h3>
+                    <p>
+                        교내 스타트업 아이디어 경진대회에서 발표 자료의 완성도로 호평받은 기획력, 
+                        주말마다 독립 서점을 탐방하며 쌓은 로컬 콘텐츠 이해도, 
+                        그리고 사람들을 모으는 친화력까지. 실전에서 검증된 팀입니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">베타 테스터 특별 혜택</h2>
+            <p class="section-subtitle">
+                지금 신청하시는 선착순 10명에게만 제공됩니다
+            </p>
+            
+            <div class="pricing-card">
+                <span class="pricing-badge">🎯 선착순 10명 한정</span>
+                <h3>베타 테스터 패키지</h3>
+                <div class="price-original">정가 200만원</div>
+                <div class="price">무료</div>
+                <ul class="pricing-features">
+                    <li>팝업 스토어 공간 활용 (1개월) 100% 무료</li>
+                    <li>초기 네트워크 연결 및 관계 형성 지원</li>
+                    <li>매출 데이터 기반 운영 컨설팅 (2회)</li>
+                    <li>공간 디자인 및 시각화 자료 제작 지원</li>
+                    <li>청년-시니어 협업 워크숍 참여 기회</li>
+                </ul>
+                <p style="color: #e53e3e; font-weight: 600; margin-top: 24px;">
+                    ⏰ 단, 1개월 후 서비스 개선을 위한 피드백 인터뷰 필수
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="final-cta" id="apply">
+        <div class="container">
+            <h2>평화 시장에서 당신의 꿈을 시작하세요</h2>
+            <p>
+                더 이상 혼자 고민하지 마세요. 로컬 연결 디자이너가 함께합니다.<br>
+                선착순 10명, 지금 바로 신청하세요.
+            </p>
+            <a href="mailto:contact@locallink.kr?subject=베타 테스터 신청" class="cta-button-white">
+                지금 무료로 시작하기 →
+            </a>
+            <p style="margin-top: 24px; font-size: 16px; opacity: 0.9;">
+                📧 contact@locallink.kr | 📞 010-XXXX-XXXX<br>
+                평화 시장 내 도시재생 지원센터 협력 사업
+            </p>
+        </div>
+    </section>
+    
+    <script>
+        // Scroll to section function
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                const offsetTop = section.offsetTop - 80;
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+                // Close mobile menu
+                document.getElementById('navLinks').classList.remove('active');
+            }
+        }
+        
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const nav = document.querySelector('nav');
+            const navLinks = document.getElementById('navLinks');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (!nav.contains(event.target) && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
